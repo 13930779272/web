@@ -1,5 +1,5 @@
 const fs = require('fs')
-// console.log(this === global)
+console.log(this === global)
 // (function (){
   
 //   console.dir(this, {showHidden: true})
@@ -10,7 +10,7 @@ const fs = require('fs')
 
 
 /**
- * node中this为一个对象，在函数中式global
+ * node中this为一个空对象，在函数中是global
  * __dirname: 当前文件执行的绝对路径
  * __filename: 当前文件的绝对路径
  * process中的属性：
