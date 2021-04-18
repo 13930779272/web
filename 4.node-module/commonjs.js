@@ -62,5 +62,77 @@
  *  if (requireDepth === 0) statCache = null;
  *  return result;
  */
+const path = require('path');
+const fs = require('fs');
+const vm = require('vm');
+const { extname } = require('path');
+function Module (id) {
+  this.id = id;
+  this.exports = {}
+}
+// 模块加载的策略模式
+Module._extensions = {
+  '.js' (module) {
+    let script = fs.readFileSync(module.id, 'utf8');
+    let templateFn = `(function (exports, module, req, __dirname, __filename){${script}})`
+    console.log(1111)
+    let fn = vm.runInThisContext(templateFn);
+    let exports = module.exports;
+    let thisVal = exports;
+    let filename = module.id
+    let __dirname = path.dirname(filename);
+    // 函数的call 的作用 1.改变this指向 2.让函数指向 this = module.exports = exports;
+    fn.call(thisVal, exports, module, req, __dirname, filename); // 调用了a模块 module.exports = 100;
+  },
+  '.json' (module) {
+    let script = fs.readFileSync(module.id, 'utf8');
+    module.exports = JSON.parse(script)
+  }
+}
+// 解析文件路径
+Module._resolveFilename = function (filename) {
+  // 把文件路径改为绝对路径
+  let filePath = path.resolve(__dirname, filename);
+  // 判断是否存在这个文件
+  let isExist = fs.existsSync(filePath);
+  // 如果存在返回
+  if(isExist) return filePath;
+  // Reflect等价于Object，Module._extensions处理文件的几种格式
+  let fileTypeKeys = Object.keys(Module._extensions);
+  // 如果不存在就拿到所有的文件类型逐个拼接判断
+  for(let i = 0; i < fileTypeKeys.length; i++) {
+    let newPath = filePath + fileTypeKeys[i];
+    if (fs.existsSync(newPath)) return newPath
+  }
+  // 如果还找不到文件就报错
+  throw new Error('module not found')
+}
+Module.prototype._load = function () {
+  // 拿到模块的扩展名，进行策略加载
+  let extname = path.extname(this.id);
+  // 找到对应的模块策略进行模块解析
+  Module._extensions[extname](this)
+}
+Module._cache = {}
+function req(filename) {
+  // 拿到解析正确的文件路径
+  let filePath = Module._resolveFilename(filename);
+  // 查看是否有模块缓存
+  let moduleCache = Module._cache[filePath];
+  // 如果有缓存就直接返回缓存的exports
+  if (moduleCache) return moduleCache.exports;
+  // 创建一个module
+  let module = new Module(filePath);
+  // 把模块放入缓存
+  Module._cache[filePath] = module
+  console.log('缓存测试')
+  // 模块加载
+  module._load();
+  // 最后返回模块的 module.exports
+  return module.exports
+
+}
 let a = require('./a');
+a = require('./a');
+a = require('./a');
 console.log(a)
