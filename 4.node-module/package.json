@@ -1,0 +1,21 @@
+{
+  "name": "4.node-module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "jquery": "^2.2.4"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

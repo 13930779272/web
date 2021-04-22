@@ -46,4 +46,20 @@ console.log(module.paths) // 查找路径
  *  4.npm link（图四）软链 or 把这个包发布到npm再安装下来
  * 
  * 包的安装 2.本地安装的模块
+ *  开发依赖（开发时使用，上线就不需要了 webpack gulp等） 生产依赖（上线了依然需要 vue react等） 同等依赖 打包依赖 可选依赖
+ *  npm install XXX , --save-dev :安装到开发环境  --save或者不加参数安装到生产环境（开发生产都能用）
+ *  npm 5.2版本以后安装共同的模块会只会安装一次除非版本不一样
+ *  .bin 目录代表你安装的一些模块可以在命令行中使用
+ *  在package.json文件的script属性下可以自定义一些执行脚本 需要用npn run XXX 去执行，当执行npm run 的时候会把.bin文件临时加到环境变量里（npm run env 可以看到），执行完后会删除
+ *  npx 类似npm run npx执行时如果没有对应的模块会先把模块安装上执行完成后删除
+ * 
+ * 
+ * 
+ *  devDependencies：放的是开发依赖
+ *  dependencies： 放的是生产依赖 装包时npm install --production 代表只安装生产依赖
+ *  peerDependencies: 同等依赖 跟生产依赖同等的，安装生产依赖时会提示还需要安装同等依赖里面的依赖，只会提示不会自动安装，不装也没事 例如 vue和vue-template-compiler
+ *  optionalDependencies: 可选依赖
+ *  bundledDependencies：打包依赖 :npm pack时会把当前目录打成一个压缩包，并且会把这里面的依赖也打进去放到node_modules里，如果没有打包依赖打的包不会有node_modules
+ * 
+ * npm版本号
  */
