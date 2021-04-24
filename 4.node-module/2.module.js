@@ -50,7 +50,7 @@ console.log(module.paths) // 查找路径
  *  npm install XXX , --save-dev :安装到开发环境  --save或者不加参数安装到生产环境（开发生产都能用）
  *  npm 5.2版本以后安装共同的模块会只会安装一次除非版本不一样
  *  .bin 目录代表你安装的一些模块可以在命令行中使用
- *  在package.json文件的script属性下可以自定义一些执行脚本 需要用npn run XXX 去执行，当执行npm run 的时候会把.bin文件临时加到环境变量里（npm run env 可以看到），执行完后会删除
+ *  在package.json文件的script属性下可以自定义一些执行脚本 需要用npn run XXX 去执行，当执行npm run 的时候会把当前目录下的node_modules目录下的.bin文件临时加到环境变量里（npm run env 可以看到），执行完后会删除
  *  npx 类似npm run npx执行时如果没有对应的模块会先把模块安装上执行完成后删除
  * 
  * 
@@ -61,5 +61,30 @@ console.log(module.paths) // 查找路径
  *  optionalDependencies: 可选依赖
  *  bundledDependencies：打包依赖 :npm pack时会把当前目录打成一个压缩包，并且会把这里面的依赖也打进去放到node_modules里，如果没有打包依赖打的包不会有node_modules
  * 
- * npm版本号
+ * npm版本号: 1.1.1 => major.minor.patch
+ *  npm version major: 大版本号加一其余版本号归零 2.0.0
+ *  npm version minor: 小版本号加一修订号归零 1.2.0
+ *  npm version patch: 修订版本号加一 1.1.2
+ * 
+ *  ^: major 不动, minor.patch 升级
+ *  ~: major.minor 不动, patch 升级
+ * 
+ * 预发版本号
+ *  alpha：预览版（内部版本，外面看不到）
+ *  beta: 测试版 2.1.0-beta.1测试版本，正常是安装不到这个版本的除非指定这个版本,发布这种版本需要单独发布版本 npm publish --tag beta
+ *  rc(release candidate): 最终测试版，如果未出问题发布为正式版
+ * 
+ * 版本号也会配合tag使用
+ * 
+ * lock文件（yarn: yarn.lock, npm: package-lock.json）：如果更改了package.json会同步给lock文件,如果版本兼容会采用lock文件的配置
+ * 
+ * 
+ * 包的发布：
+ *  1.需要去（https://www.npmjs.com/）看包的名字是否重名，如果重名就不能发布，还有作用域包(@vue/XXX)
+ *  2.切换npm源，官方源
+ *  2.需要先登录 npm addUser 输入账号密码邮箱
+ *  3.npm publish,  卸载 npm unpublish -- force
+ *  
+ * 
+ * yarn mongorepo
  */
