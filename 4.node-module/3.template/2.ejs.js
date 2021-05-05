@@ -2,11 +2,27 @@
  * 模板引擎的实现
  *  new Function + with实现
  */
-const ejs = require('ejs');
+// const ejs = require('ejs');
 const fs = require('fs');
 const util = require('util');
 const read = util.promisify(fs.readFile);
-
+const ejs = {
+  async renderFile (filePath, options) {
+    let content = await read(filePath, 'utf8');
+    content = content.replace(/<%=(.+?)%>/g, function () {
+      // console.log(arguments[1])
+      return '${'+arguments[1]+'}'
+    })
+    let head = 'let str = "";\nwith(obj){\n str +=`'
+    let body = content.replace(/<%(.+?)%>/g, function() {
+      return '`\n' + arguments[1] + '\nstr+=`'
+    });
+    let footer = '`\n}\n return str'
+    let fn = new Function('obj',head + body + footer)
+    // console.log(fn.toString())
+    return fn(options)
+  }
+};
 
 (async function () {
   let r = await ejs.renderFile('C:\\webWork\\framework\\web\\4.node-module\\3.template\\2.template.html', {arr: [1,2,3,4,5,6]});
