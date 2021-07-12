@@ -140,7 +140,7 @@ console.log(this === global)
  * 用文件拆分的方法配合iife（自执行函数）来解决这个问题
  * 以上问题解决了又出现了依赖的问题 （amd cmd依赖前置）
  * 
- * umd兼容 amd umd commonjs 规范 ，但是不兼容esModule,所以现在打包都会有两种模块 umd模块和esModule模块
+ * umd兼容 amd commonjs 规范 ，但是不兼容esModule,所以现在打包都会有两种模块 umd模块和esModule模块
  * 
  * commonjs规范(基于文件读写 动态的)
  *  一个文件就是一个模块，我想给别人用就module.exports导出，别人想用我就要require

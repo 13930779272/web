@@ -132,7 +132,7 @@ function req(filename) {
   return module.exports
 
 }
-let a = require('./a');
-a = require('./a');
-a = require('./a');
-console.log(a)
+let a = req('./a');
+// a = require('./a');
+// a = require('./a');
+console.log(a,111)

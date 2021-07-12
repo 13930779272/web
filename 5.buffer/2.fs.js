@@ -28,7 +28,20 @@ let buffer = Buffer.alloc(3);
 // 打开需要读取的文件的绝对地址，r读取操作符， 回调
 fs.open(path.resolve(__dirname, 'a.txt'), 'r', function(err, fd) {
   // console.log(fd);
-  // fd 缓存区buffer， 缓存区写入的偏移量， 写入的长度， 读取文件的偏移量，
+  // fd系统 缓存区buffer， 缓存区写入的偏移量， 写入的长度， 读取文件的偏移量，
+  
+
+  /**参数
+   * fd系统分配的打开文件后的整数
+   * buffer要写入的缓存空间
+   * 从缓存的哪里开始写入
+   * 写入几个
+   * 读取文件内容的位置
+   * callback
+   *  err:错误信息
+   *  bytesRead真正读取的数量
+   *  readBuffer读到的buffer
+   */
   fs.read(fd, buffer, 0, 3, 7, function (err,bytesRead, readBuffer) {
     console.log(bytesRead, readBuffer); // 3 <Buffer 37 38 39>
     fs.open(path.resolve(__dirname, 'b.txt'), 'w', function (err, wfd) {
