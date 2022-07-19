@@ -13,7 +13,7 @@
  *  6.根据文件后缀 Module._extensions['.js'] 去做策略加载
  *  7.用的是同步读取文件把内容传到 module._compile
  *  8.增加一个函数的壳子 并且让函数执行 让 module.exports 作为了this
- *  9.用户会默认拿到module.exports的返回结果 导出的时候是module.ecports = xxx所以能拿到里面的属性
+ *  9.用户会默认拿到module.exports的返回结果 导出的时候是module.exports = xxx所以能拿到里面的属性
  *  10.最终返回的是 exports对象
  * 
  *  return mod.require(path); mod => Module的实例 -> 

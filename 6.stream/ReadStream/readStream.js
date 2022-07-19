@@ -25,7 +25,7 @@ class ReadStream extends EventEmitter{
     });
     this.offset = this.start
   }
-  destory(err) {
+  destroy(err) {
     if(err){
       this.emit('error', err);
     }
@@ -36,7 +36,7 @@ class ReadStream extends EventEmitter{
   open(){
     fs.open(this.path, this.flages, (err, fd) => {
       if(err) {
-        return this.destory(err)
+        return this.destroy(err)
       };
       this.fd = fd;
       this.emit('open', fd)
@@ -59,7 +59,7 @@ class ReadStream extends EventEmitter{
     fs.read(this.fd, this.buffer, 0, length, this.offset, (err, bytesRead, buffer) => {
       // 判断报错
       if(err) {
-        return this.destory(err);
+        return this.destroy(err);
       }
       // 判断是否读取到了数据
       if(bytesRead) {
@@ -76,7 +76,7 @@ class ReadStream extends EventEmitter{
         }
       } else { // 如果没有读取到数据就证明读取结束了
         this.emit('end');
-        this.destory()
+        this.destroy()
       }
       
     })

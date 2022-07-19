@@ -53,3 +53,19 @@ setTimeout(() => {
 //   Fn.prototype = proto;
 //   return new Fn()
 // }
+const obj = {
+  name: 'hahah',
+  age: 18,
+  info: {
+    address: 'beijing'
+  }
+}
+
+const {name, age, info: { address }} = obj;
+
+// 解构赋值
+console.log(name, age, address);
+
+
+// 非解构赋值
+console.log(obj.name, obj.age, obj.info.address);

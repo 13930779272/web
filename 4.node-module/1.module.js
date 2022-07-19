@@ -29,7 +29,7 @@ const vm = require('vm')
  *  extname(): 取扩展名
  *  basename(): 获取基本名
  *  relative(): 根据路径获取相对路径
- *  dirname():取当前文件的父路径
+ *  dirname(path):获取path的父路径
  * 
  * 字符串如何变成js代码来执行
  *  eval：会受执行环境影响
@@ -61,7 +61,10 @@ const vm = require('vm')
 // console.log(path.extname('a.js'))
 // console.log(path.basename('a.js', 's'))
 // console.log(path.relative('q/w/e/r/t/a.js','w')) // ..\..\..\..\..\..\w
-// console.log(path.dirname('q/e/r/r'))
+console.log(__dirname);
+console.log(path.posix.dirname(__dirname))
+// console.log(path.posix.resolve('/foo', '/bar', 'baz'));
+// console.log(path.posix.relative('C:/orandea/test/aaa', 'C:/orandea/impl/bbb'));
 
 
 // eval('console.log(1)')
@@ -73,6 +76,6 @@ const vm = require('vm')
 var a = 100
 // var a = 100 等价于 (function(){ var a = 100; console.log(a)})()
 
-vm.runInThisContext('console.log(this.a)')
+// vm.runInThisContext('console.log(this.a)')
 // vm.runInNewContext('console.log(a)')
 // vm.runInContext('console.log(1)')
